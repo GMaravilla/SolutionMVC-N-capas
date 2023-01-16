@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<GlobalEntity.Balero>
+<div class="card">
+    <div class="card-body">
+        <a class="btn btn-success" asp-action="Create" asp-controller="Balero">Agregar nuevo</a>
+        <div class="card-title">
+            <h2>Lista de Baleros</h2>
+        </div>
+        <table class="table table-bordered table-striped" id="tbllist">
+            <thead class="bg-dark text-white">
+                <tr>
+
+                    <td>Marca</td>
+                    <td>Codigo</td>
+                    <td>($) Precio</td>
+                    <td>Fecha de ingreso</td>
+                    <td>Opciones</td>
+                </tr>
+            </thead>
+            <tbody>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+            $(document).ready(function () {
+
+
+                $('#tbllist').dataTable({
+                    "serverSide": true,
+                    "ajax": {
+                        "type": "POST",
+                        "url": "@Url.Action("GetAll","Balero")",
+                        "datatype": "json"
+
+
+                    },
+                    "columns": [
+                        { "data": "marca" },
+                        { "data": "codigo" },
+                        { "data": "precio" },
+                        { "data": "fechaCreate" },
+                        {
+                        "data": "idBaleros", "render": function (idBalero) {
+
+                                return '<a onclick="FunEdit(this)" class="btn btn-primary mx-2">Editar</a>'+
+                                    '<a onclick="FunRemove(this)" class="btn btn-danger" > Eliminar </a>'+
+                                '<input type="hidden" id="hd" value=' + idBalero + '>'
+                            }
+                        }
+
+                    ]
+
+                });
+                
+            });
+           
+            function FunEdit(element){
+
+            var idBalero = $(element).closest('tr').find('#hd').val();
+            window.location.href = "/Balero/Edit?idBaleros=" + idBalero;
+
+
+            }
+
+        function FunRemove(element) {
+
+            var idBalero = $(element).closest('tr').find('#hd').val();
+
+            if(confirm("¿Desea eliminar el Balero?")){
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Balero/Remove",
+                    data: { IdBalero: idBalero },
+                    success: function (data) {
+
+                        if (data == 'pass') {
+
+                            alert('Eliminado');
+                            window.location.reload();
+                        } else {
+
+                            alert('fallo');
+                        }
+
+                    }
+
+                })
+
+            }
+        }
+    </script>
+}
