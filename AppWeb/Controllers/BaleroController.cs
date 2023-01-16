@@ -29,7 +29,7 @@ namespace AppWeb.Controllers
         public async Task<IActionResult> Edit(int idBalero)
         {
             GE::Balero balero = await this.baleroBC.getBalerobyid(Convert.ToInt32(idBalero));
-            return View("Create", balero);
+            return View("Edit", balero);
         }
 
         public async Task<IActionResult> Save(GE::Balero balero)

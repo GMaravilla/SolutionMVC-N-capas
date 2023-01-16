@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Editar";
+}
+@model GlobalEntity.Balero;
+<div class="card">
+    <div class="card-title">
+        <h2>Crear Balero</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <input id="txtidbalero" value="@Model.IdBaleros" disabled="disabled" class="form-control" type="hidden" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Marca</label>
+                    <input id="txtmarca" value="@Model.Marca" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Codigo</label>
+                    <input id="txtcodigo" value="@Model.Codigo" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input id="txtprecio" type="number" step="0.01" value="@Model.Precio" class="form-control" />
+                </div>
+            </div>
+        </div>
+        @section Scripts{
+            <script>
+
+                $('.jf').datepicker({
+                    format: "dd/mm/yyyy"
+                });
+
+                function backlist() {
+
+                    window.location.href = "/Balero";
+                }
+
+                function save() {
+
+
+                    var idBalero = $('#txtidbalero').val();
+                    var marca = $('#txtmarca').val();
+                    var codigo = $('#txtcodigo').val();
+                    var precio = $('#txtprecio').val();
+                    var fechadeIngreso = $('#txtfechadeingreso').val();
+
+                    var isproceed = true;
+
+                    if (marca != '' && marca != null) {
+
+                        $('#txtmarca').css('border-color', '#ccc');
+                    } else {
+
+                        $('#txtmarca').css('border-color', 'red');
+                        return isproceed = false;
+                    }
+
+                    if (codigo != '' && codigo != null) {
+
+                        $('#txtcodigo').css('border-color', '#ccc');
+                    } else {
+
+                        $('#txtcodigo').css('border-color', 'red');
+                        return isproceed = false;
+                    }
+
+                    if (precio != '' && precio != null) {
+
+                        $('#txtprecio').css('border-color', '#ccc');
+                    } else {
+
+                        $('#txtprecio').css('border-color', 'red');
+                        return isproceed = false;
+                    }
+                     if (fechadeIngreso != '' && fechadeIngreso != null) {
+
+                        $('#txtfechadeingreso').css('border-color', '#ccc');
+                    } else {
+
+                        $('#txtfechadeingreso').css('border-color', 'red');
+                        return isproceed = false;
+                    }
+
+                    if (isproceed) {
+
+                        var _balero = new Object();
+                        _balero.IdBaleros = parseInt(idBalero);
+                        _balero.Marca = marca;
+                        _balero.Codigo = codigo;
+                        _balero.Precio = parseFloat(precio);
+                        _balero.FechaCrete = fechadeIngreso;
+
+                        $.ajax({
+
+                            type: "POST",
+                            url: "/Balero/Save",
+                            data: _balero,
+                            success: function (data) {
+
+                                if (data == 'pass') {
+
+                                    alert('Guardado');
+                                    backlist();
+                                } else {
+
+                                    alert('fallo');
+                                }
+
+                            }
+
+                        })
+                    }
+
+                }
+
+
+            </script>
+
+
+        }
