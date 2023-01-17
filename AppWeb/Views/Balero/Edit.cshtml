@@ -6,12 +6,13 @@
 <div class="card">
     <div class="card-title">
         <h2>Editar Balero</h2>
+        <h2>@Model.IdBaleros</h2>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <input id="txtidbalero" value="@Model.IdBaleros" disabled="disabled" class="form-control" type="hidden" />
+                    <input id="txtidbalero" value="@Model.IdBaleros" disabled="disabled" class="form-control" type="number" />
                 </div>
             </div>
         </div>
@@ -39,13 +40,40 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input id="txtprecio" type="text" value="@Model.FechaCreate" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <a class="btn btn-success mt-3" onclick="save()">Guardar</a> <a onclick="backlist()" class="btn btn-danger  mt-3">Cancelar</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        
         @section Scripts{
             <script>
 
-                $('.jf').datepicker({
+              /* $('.jf').datepicker({
                     format: "dd/mm/yyyy"
-                });
+                });*/
+        // Crear una nueva fecha con moment
+                 let fecha = moment();
 
+        // Formatear la fecha con el formato deseado
+                 let fechaFormateada = fecha.format("DD/MM/YYYY");
+
+        // Mostrar la fecha formateada en el elemento con clase .jf
+                 $('.jf').text(fechaFormateada);
+
+                
                 function backlist() {
 
                     window.location.href = "/Balero";

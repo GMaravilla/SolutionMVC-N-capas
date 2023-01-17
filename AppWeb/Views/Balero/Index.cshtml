@@ -42,30 +42,34 @@
 
 
                     },
-                    "columns": [
-                        { "data": "marca" },
-                        { "data": "codigo" },
-                        { "data": "precio" },
-                        { "data": "fechaCreate" },
-                        {
+                "columns": [
+                    { "data": "marca" },
+                    { "data": "codigo" },
+                    { "data": "precio" },
+                    {
+                        "data": "fechaCreate", "render": function (data) {
+                            var date = new Date(data);
+                            var formattedDate = date.toLocaleDateString();
+                            return formattedDate;
+                        }
+                    },
+                    {
                         "data": "idBaleros", "render": function (idBalero) {
 
-                                return '<a onclick="FunEdit(this)" class="btn btn-primary mx-2">Editar</a>'+
-                                    '<a onclick="FunRemove(this)" class="btn btn-danger" > Eliminar </a>'+
+                            return '<a onclick="FunEdit(this)" class="btn btn-primary mx-2">Editar</a>' +
+                                '<a onclick="FunRemove(this)" class="btn btn-danger" > Eliminar </a>' +
                                 '<input type="hidden" id="hd" value=' + idBalero + '>'
-                            }
                         }
+                    }
 
-                    ]
-
+                ]
                 });
-                
             });
            
             function FunEdit(element){
 
             var idBalero = $(element).closest('tr').find('#hd').val();
-            window.location.href = "/Balero/Edit?idBaleros=" + idBalero;
+            window.location.href = "/Balero/Edit?idBalero=" + idBalero;
 
 
             }

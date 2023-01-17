@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
- <!--<div class="row">
+        <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>fecha de ingreso</label>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-               -->
+               
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
@@ -59,10 +59,14 @@
 
 @section Scripts{
     <script>
+         // Crear una nueva fecha con moment
+                 let fecha = moment();
 
-        $('.jf').datepicker({
-            format: "dd/mm/yyyy"
-        });
+        // Formatear la fecha con el formato deseado
+                 let fechaFormateada = fecha.format("DD/MM/YYYY");
+
+        // Mostrar la fecha formateada en el elemento con clase .jf
+                 $('.jf').text(fechaFormateada);
 
         function backlist() {
 
@@ -76,7 +80,7 @@
             var marca = $('#txtmarca').val();
             var codigo = $('#txtcodigo').val();
             var precio = $('#txtprecio').val();
-            //var fechadeIngreso = $('#txtfechadeingreso').val();
+            var fechadeIngreso = $('#txtfechadeingreso').val();
 
             var isproceed = true;
 
@@ -106,38 +110,39 @@
                 $('#txtprecio').css('border-color', 'red');
                 return isproceed = false;
             }
-            /*   if (fechadeIngreso != '' && fechadeIngreso != null) {
+            if (fechadeIngreso != '' && fechadeIngreso != null) {
 
                 $('#txtfechadeingreso').css('border-color', '#ccc');
             } else {
 
                 $('#txtfechadeingreso').css('border-color', 'red');
                 return isproceed = false;
-            }*/
+            } 
 
             if (isproceed) {
 
-                 var _balero=new Object();
+                var _balero = new Object();
                 _balero.IdBaleros = parseInt(idBalero);
                 _balero.Marca = marca;
                 _balero.Codigo = codigo;
                 _balero.Precio = parseFloat(precio);
-              // _balero.FechaCrete = fechadeIngreso;
+                _balero.FechaCreate = fechadeIngreso;
 
                 $.ajax({
 
-                    type:"POST",
-                    url:"/Balero/Save",
+                    type: "POST",
+                    url: "/Balero/Save",
                     data: _balero,
-                    success:function(data){
+                    success: function (data) {
 
-                        if(data=='pass'){
+                        if (data == 'pass') {
 
                             alert('Guardado');
                             backlist();
-                        }else{
+                        } else {
 
                             alert('fallo');
+
                         }
 
                     }
@@ -149,6 +154,4 @@
 
 
     </script>
-
-
 }
